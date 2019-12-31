@@ -19,7 +19,18 @@ class _ClockClockState extends State<ClockClock> {
   Timer _timer;
 
   Widget build(BuildContext context) {
-    return Digit(_now.second % 10);
+    return Row(children: <Widget>[
+      /*
+      Digit((_now.hour / 10).truncate()),
+      Digit(_now.hour % 10),
+      Text(':'),
+      */
+      Digit((_now.minute / 10).truncate()),
+      Digit(_now.minute % 10),
+      Text(':'),
+      Digit((_now.second / 10).truncate()),
+      Digit(_now.second % 10),
+    ],);    
   }
 
   @override

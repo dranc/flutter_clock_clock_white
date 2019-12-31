@@ -26,7 +26,7 @@ class Digit extends StatelessWidget {
 
   DateTime _getTime(int hours, int minutes) {
     var now = DateTime.now();
-    return DateTime(now.year, now.month, now.day, hours ?? 22, minutes ?? 52);
+    return DateTime(now.year, now.month, now.day, hours ?? 22, minutes ?? 50);
   }
 
   List<DateTime> _getDisplay() {
