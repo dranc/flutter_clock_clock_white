@@ -4,7 +4,7 @@
 
 import 'dart:io';
 
-import 'package:analog_clock/number_clock.dart';
+import 'package:analog_clock/clock_clock.dart';
 import 'package:flutter_clock_helper/customizer.dart';
 import 'package:flutter_clock_helper/model.dart';
 import 'package:flutter/foundation.dart';
@@ -31,5 +31,5 @@ void main() {
   //
   // Your job is to edit [AnalogClock], or replace it with your own clock
   // widget. (Look in analog_clock.dart for more details!)
-  runApp(ClockCustomizer((ClockModel model) => NumberClock(model)));
+  runApp(ClockCustomizer((ClockModel model) => ClockClock(model)));
 }
