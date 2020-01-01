@@ -13,7 +13,6 @@ class Clock extends StatelessWidget {
   final DateTime time;
 
   Widget build (BuildContext context) {
-    final s_time = DateFormat.Hms().format(DateTime.now());
     final customTheme = Theme.of(context).brightness == Brightness.light
         ? Theme.of(context).copyWith(
             // Hour hand.
@@ -32,39 +31,33 @@ class Clock extends StatelessWidget {
           );
 
     return Container(
-          child: Semantics.fromProperties(
-            properties: SemanticsProperties(
-              label: 'Analog clock with time $s_time',
-              value: s_time,
-            ),
-            child: Container(
-              color: customTheme.backgroundColor,
-              child: Stack(
-                children: [
-                  DrawnHand(
-                    color: customTheme.highlightColor,
-                    thickness: 16,
-                    size: 0.9,
-                    angleRadians: time.minute * radiansPerTick,
-                  ),
-                  // Example of a hand drawn with [Container].
-                  ContainerHand(
-                    color: Colors.transparent,
-                    size: 0.5,
-                    angleRadians: time.hour * radiansPerHour,
-                    child: Transform.translate(
-                      offset: Offset(0.0, -60.0),
-                      child: Container(
-                        width: 32,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: customTheme.primaryColor,
-                        ),
+          child: Container(
+            color: customTheme.backgroundColor,
+            child: Stack(
+              children: [
+                DrawnHand(
+                  color: customTheme.highlightColor,
+                  thickness: 16,
+                  size: 0.9,
+                  angleRadians: time.minute * radiansPerTick,
+                ),
+                // Example of a hand drawn with [Container].
+                ContainerHand(
+                  color: Colors.transparent,
+                  size: 0.5,
+                  angleRadians: time.hour * radiansPerHour,
+                  child: Transform.translate(
+                    offset: Offset(0.0, -60.0),
+                    child: Container(
+                      width: 32,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        color: customTheme.primaryColor,
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
       width: 50,
