@@ -1,10 +1,16 @@
-import 'package:analog_clock/analog_clock.dart';
 import 'package:analog_clock/container_hand.dart';
 import 'package:analog_clock/drawn_hand.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_clock_helper/model.dart';
-import 'package:intl/intl.dart';
+
+import 'package:vector_math/vector_math_64.dart' show radians;
+
+/// Total distance traveled by a second or a minute hand, each second or minute,
+/// respectively.
+final radiansPerTick = radians(360 / 60);
+
+/// Total distance traveled by an hour hand, each hour, in radians.
+final radiansPerHour = radians(360 / 12);
 
 class Clock extends StatelessWidget {
   const Clock(this.time);

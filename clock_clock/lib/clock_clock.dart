@@ -28,13 +28,20 @@ class _ClockClockState extends State<ClockClock> {
       secondNumber = _now.second;
     }
 
-    return Row(children: <Widget>[
-      Digit((fisrtNumber / 10).truncate()),
-      Digit(fisrtNumber % 10),
-      Text(':'),
-      Digit((secondNumber / 10).truncate()),
-      Digit(secondNumber % 10),
-    ],);
+    return Container(
+      margin: const EdgeInsets.all(20.0),
+      //color: Colors.amber[600],
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Digit((fisrtNumber / 10).truncate()),
+            Digit(fisrtNumber % 10),
+            Spacer(),
+            Digit((secondNumber / 10).truncate()),
+            Digit(secondNumber % 10),
+          ],
+        ),
+    );
   }
 
   @override

@@ -8,20 +8,32 @@ class Digit extends StatelessWidget {
 
   Widget build(BuildContext context){
     var display = _getDisplay();
-    return Column(children: <Row>[
-      Row(children: <Widget>[
-        Clock(display[0]),
-        Clock(display[1])
+    return Container(
+      //color: Colors.red,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Row>[
+          Row(
+            children: <Widget>[
+              Clock(display[0]),
+              Clock(display[1])
+          ]
+        ),
+        Row(
+          children: <Widget>[
+              Clock(display[2]),
+              Clock(display[3])         
+          ]
+        ),
+        Row(
+          children: <Widget>[
+              Clock(display[4]),
+              Clock(display[5])         
+          ]
+        )
       ]),
-      Row(children: <Widget>[
-        Clock(display[2]),
-        Clock(display[3])
-      ]),
-      Row(children: <Widget>[
-        Clock(display[4]),
-        Clock(display[5])
-      ])
-    ]);
+    );
   }
 
   DateTime _getTime(int hours, int minutes) {
