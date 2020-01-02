@@ -1,15 +1,8 @@
-# Flutter Clock
+# Pour lancer l'appli
 
-Welcome to Flutter Clock!
+Dans le terminal de Visual Code
 
-See [flutter.dev/clock](https://flutter.dev/clock) for how to get started, submission requirements, contest rules, and FAQs.
+    cd clock_clock
+    flutter run
 
-See a [live demo](https://maryx.github.io/flutter_clock) with Flutter for Web!
-
-Example [Analog Clock](analog_clock)
-
-<img src='analog_clock/analog.gif' width='350'>
-
-Example [Digital Clock](digital_clock)
-
-<img src='digital_clock/digital.gif' width='350'>
+Idée largement inspiré de [humanssince1982](https://www.humanssince1982.com/the-clock-clock-white).
