@@ -34,11 +34,13 @@ class _ClockClockState extends State<ClockClock> {
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
+            Spacer(),
             Digit((fisrtNumber / 10).truncate()),
             Digit(fisrtNumber % 10),
             Spacer(),
             Digit((secondNumber / 10).truncate()),
             Digit(secondNumber % 10),
+            Spacer(),
           ],
         ),
     );

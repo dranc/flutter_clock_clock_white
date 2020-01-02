@@ -15,57 +15,51 @@ final radiansPerHour = radians(360 / 12);
 class Clock extends StatelessWidget {
   const Clock(this.time);
 
+  final double  thickness =  6;
+
   // The time that will be displayed by the clock
   final DateTime time;
 
   Widget build (BuildContext context) {
     final customTheme = Theme.of(context).brightness == Brightness.light
         ? Theme.of(context).copyWith(
-            // Hour hand.
-            primaryColor: Color(0xFF4285F4),
-            // Minute hand.
-            highlightColor: Color(0xFF8AB4F8),
-            // Second hand.
-            accentColor: Color(0xFF669DF6),
-            backgroundColor: Color(0xFFD2E3FC),
+            // Aiguille + cadre
+            primaryColor: Colors.black,
+            // Fond
+            backgroundColor: Colors.white,
           )
         : Theme.of(context).copyWith(
-            primaryColor: Color(0xFFD2E3FC),
-            highlightColor: Color(0xFF4285F4),
-            accentColor: Color(0xFF8AB4F8),
-            backgroundColor: Color(0xFF3C4043),
+            primaryColor: Colors.white,
+            backgroundColor: Colors.black,
           );
 
     return Container(
-          child: Container(
-            color: customTheme.backgroundColor,
-            child: Stack(
-              children: [
-                DrawnHand(
-                  color: customTheme.highlightColor,
-                  thickness: 16,
-                  size: 0.9,
-                  angleRadians: time.minute * radiansPerTick,
-                ),
-                // Example of a hand drawn with [Container].
-                ContainerHand(
-                  color: Colors.transparent,
-                  size: 0.5,
-                  angleRadians: time.hour * radiansPerHour,
-                  child: Transform.translate(
-                    offset: Offset(0.0, -60.0),
-                    child: Container(
-                      width: 32,
-                      height: 150,
-                      decoration: BoxDecoration(
-                        color: customTheme.primaryColor,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+      child: Container(
+        decoration: ShapeDecoration(
+          shape: CircleBorder(
+            side: BorderSide(
+              color: customTheme.primaryColor,
+              width: 1,
+            )
+          )
+        ),
+        child: Stack(
+          children: [
+            DrawnHand(
+              color: customTheme.primaryColor,
+              thickness: thickness,
+              size: 0.8,
+              angleRadians: time.minute * radiansPerTick,
             ),
-          ),
+            DrawnHand(
+              color: customTheme.primaryColor,
+              thickness: thickness,
+              size: 0.7,
+              angleRadians: time.hour * radiansPerHour,
+            ),
+          ],
+        ),
+      ),
       width: 50,
       height: 50
     );
