@@ -11,61 +11,78 @@ final radiansPerTick = radians(360 / 60);
 /// Total distance traveled by an hour hand, each hour, in radians.
 final radiansPerHour = radians(360 / 12);
 
-class Clock extends StatelessWidget {
+class Clock extends StatefulWidget {
   const Clock(this.time);
 
-  static final default_time = DateTime(0, 0, 0, 7, 35);
-
-  final double  thickness =  6;
+  State<StatefulWidget> createState() => _ClockState();
 
   // The time that will be displayed by the clock
   final DateTime time;
+}
 
+class _ClockState extends State<Clock> with TickerProviderStateMixin {
   // Define if there is something to display
-  bool get isEmpty => time == null;
+  bool get isEmpty => widget.time == null;
 
-  DateTime get time_to_diplay => time ?? default_time;
-
-  Widget build (BuildContext context) {
-    final customTheme = Theme.of(context).brightness == Brightness.light
-      ? Theme.of(context).copyWith(
-          // Aiguille + cadre
-          primaryColor: Colors.black,
-          // Fond
-          backgroundColor: Colors.white,
-        )
-      : Theme.of(context).copyWith(
-          primaryColor: Colors.white,
-          backgroundColor: Colors.black,
-        );
+  DateTime timeToDisplay;
   
+  Animation<int> animation;
+
+  void didUpdateWidget(Clock oldClock) {
+    super.didUpdateWidget(oldClock);
+
+    var controller = AnimationController(
+        duration: Duration(milliseconds: 500), vsync: this);
+
+    var t1 = oldClock.time ?? DateTime(0, 0, 0, 7, 35); 
+    var t2 = widget.time ?? DateTime(0, 0, 0, 7, 35);
+
+    var begin = t1.hour * 60 +  t1.minute;
+    var end = t2.hour * 60 +  t2.minute;
+
+    animation = IntTween(begin: begin, end: end).animate(controller)
+      ..addListener(() {
+        setState(() {
+          timeToDisplay = DateTime(0, 0, 0, (animation.value / 60).truncate(), (animation.value % 60).truncate());
+        });
+      });
+
+    controller.forward();
+  }
+
+  void initState() {
+    super.initState();
+  }
+
+  Widget build (BuildContext context) {  
     //double get size => 50;
     double size = 50;
+
+    var t = timeToDisplay ?? DateTime(0, 0, 0, 7, 35);
 
     return Container(
         decoration: ShapeDecoration(
           shape: CircleBorder(
             side: BorderSide(
-              color: customTheme.primaryColor,
+              color: Colors.grey,
               width: 1,
             )
           )
         ),
-        child: Center(
-          child: SizedBox.expand(
-            child: CustomPaint(
-              painter: _ClockPainter(
-                minuteRadians: time_to_diplay.minute * radiansPerTick,
-                hourRadians: time_to_diplay.hour * radiansPerHour,
-                isEnable: !isEmpty,                
-              ),
+        child: SizedBox.expand(
+          child: CustomPaint(
+            painter: _ClockPainter(
+              minuteRadians: t.minute * radiansPerTick,
+              hourRadians: t.hour * radiansPerHour,
+              isEnable: !isEmpty,                
             ),
           ),
-      ),
+        ),
       width: size,
       height: size
     );
   }
+
 }
 
 class _ClockPainter extends CustomPainter {
@@ -84,7 +101,7 @@ class _ClockPainter extends CustomPainter {
   double hourLength = 0.75;
 
   Color darkColor = Colors.black;
-  Color lightColor = Colors.black54;
+  Color lightColor = Colors.grey;
 
   Offset _radianToPosition(Size size, double angleRadians, double handSize) {
     final center = (Offset.zero & size).center;

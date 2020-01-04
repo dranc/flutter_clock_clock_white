@@ -62,7 +62,7 @@ class _ClockClockState extends State<ClockClock> {
   void _updateTime() {
     setState(() {
       _now = DateTime.now();
-      // Update once per second / minutes depending on debug value
+      // Update once per minutes or every 1 seconds if in debug mode
       var nextUpdate = Duration(minutes: 1) - Duration(seconds: _now.second);
       if (CLOCK_DEBUG) {
         nextUpdate = Duration(seconds: 1) - Duration(milliseconds: _now.millisecond);

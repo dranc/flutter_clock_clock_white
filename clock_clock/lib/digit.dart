@@ -18,21 +18,22 @@ class Digit extends StatelessWidget {
             children: <Widget>[
               Clock(display[0]),
               Clock(display[1])
-          ]
-        ),
-        Row(
-          children: <Widget>[
-              Clock(display[2]),
-              Clock(display[3])         
-          ]
-        ),
-        Row(
-          children: <Widget>[
-              Clock(display[4]),
-              Clock(display[5])         
-          ]
-        )
-      ]),
+            ]
+          ),
+          Row(
+            children: <Widget>[
+                Clock(display[2]),
+                Clock(display[3])         
+            ]
+          ),
+          Row(
+            children: <Widget>[
+                Clock(display[4]),
+                Clock(display[5])         
+            ]
+          )
+        ]
+      ),
     );
   }
 
