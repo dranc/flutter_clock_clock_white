@@ -15,10 +15,17 @@ final radiansPerHour = radians(360 / 12);
 class Clock extends StatelessWidget {
   const Clock(this.time);
 
+  static final default_time = DateTime(0, 0, 0, 7, 35);
+
   final double  thickness =  6;
 
   // The time that will be displayed by the clock
   final DateTime time;
+
+  // Define if there is something to display
+  bool get isEmpty => time == null;
+
+  DateTime get time_to_diplay => time ?? default_time;
 
   Widget build (BuildContext context) {
     final customTheme = Theme.of(context).brightness == Brightness.light
@@ -49,13 +56,13 @@ class Clock extends StatelessWidget {
               color: customTheme.primaryColor,
               thickness: thickness,
               size: 0.8,
-              angleRadians: time.minute * radiansPerTick,
+              angleRadians: time_to_diplay.minute * radiansPerTick,
             ),
             DrawnHand(
               color: customTheme.primaryColor,
               thickness: thickness,
               size: 0.7,
-              angleRadians: time.hour * radiansPerHour,
+              angleRadians: time_to_diplay.hour * radiansPerHour,
             ),
           ],
         ),
