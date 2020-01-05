@@ -14,33 +14,24 @@ class ClockClock extends StatefulWidget {
 }
 
 class _ClockClockState extends State<ClockClock> {
-  var _now = DateTime.now();
   // TIP: when developping set the following bool to true to see the clock display minutes / seconds and been updated every 13 seconds
   static const bool CLOCK_DEBUG = true;
   Timer _timer;
 
+  int _firstD, _secondD, _thirdD, _fourthD;
+
   Widget build(BuildContext context) {
-    var firstNumber = widget.model.is24HourFormat ? _now.hour : _now.hour % 12;
-    var secondNumber = _now.minute;
-
-    // Use minute and second for debugging only
-    if (CLOCK_DEBUG) {
-      firstNumber = _now.minute;
-      secondNumber = _now.second;
-    }
-
     return Container(
       margin: const EdgeInsets.all(20.0),
-      //color: Colors.amber[600],
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Spacer(),
-            Digit((firstNumber / 10).truncate()),
-            Digit(firstNumber % 10),
+            Digit(_firstD),
+            Digit(_secondD),
             Spacer(),
-            Digit((secondNumber / 10).truncate()),
-            Digit(secondNumber % 10),
+            Digit(_thirdD),
+            Digit(_fourthD),
             Spacer(),
           ],
         ),
@@ -50,8 +41,21 @@ class _ClockClockState extends State<ClockClock> {
   @override
   void initState() {
     super.initState();
+
     // Set the initial values.
-    _updateTime();
+    // We display a "HI!" message during the startup
+    setState(() {      
+      _firstD = Digit.EMPTY;
+      _secondD = Digit.H;
+      _thirdD = Digit.I;
+      _fourthD = Digit.EMPTY;
+    });
+
+    // Wait 3 seconds before we display the real hour
+    _timer = Timer(
+        Duration(seconds: 3),
+        _updateTime,
+      );
   }
 
   @override
@@ -61,18 +65,29 @@ class _ClockClockState extends State<ClockClock> {
   }
 
   void _updateTime() {
-    setState(() {
-      _now = DateTime.now();
-      // Update once per minutes or every 13 seconds if in debug mode
-      var nextUpdate = Duration(minutes: 1) - Duration(seconds: _now.second);
-      if (CLOCK_DEBUG) {
-        nextUpdate = Duration(seconds: 13) - Duration(milliseconds: _now.millisecond);
-      }
+    var now = DateTime.now();
+    var firstNumber = widget.model.is24HourFormat ? now.hour : now.hour % 12;
+    var secondNumber = now.minute;
+    // Update once per minutes or every 13 seconds if in debug mode
+    var nextUpdate = Duration(minutes: 1) - Duration(seconds: now.second);
+    
+    // Use minute and second for debugging only
+    if (CLOCK_DEBUG) {
+      firstNumber = now.minute;
+      secondNumber = now.second;
+      nextUpdate = Duration(seconds: 13) - Duration(milliseconds: now.millisecond);
+    }
 
-      _timer = Timer(
-        nextUpdate,
-        _updateTime,
-      );
+    setState(() {
+      _firstD = (firstNumber / 10).truncate();
+      _secondD = firstNumber % 10;
+      _thirdD = (secondNumber / 10).truncate();
+      _fourthD = secondNumber % 10;
     });
+
+    _timer = Timer(
+      nextUpdate,
+      _updateTime,
+    );
   }
 }

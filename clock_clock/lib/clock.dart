@@ -89,7 +89,6 @@ class _ClockState extends State<Clock> with TickerProviderStateMixin {
       height: size
     );
   }
-
 }
 
 class _ClockPainter extends CustomPainter {
