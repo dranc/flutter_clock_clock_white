@@ -15,16 +15,17 @@ class ClockClock extends StatefulWidget {
 
 class _ClockClockState extends State<ClockClock> {
   var _now = DateTime.now();
+  // TIP: when developping set the following bool to true to see the clock display minutes / seconds and been updated every 13 seconds
   static const bool CLOCK_DEBUG = true;
   Timer _timer;
 
   Widget build(BuildContext context) {
-    var fisrtNumber = _now.hour;
+    var firstNumber = widget.model.is24HourFormat ? _now.hour : _now.hour % 12;
     var secondNumber = _now.minute;
 
     // Use minute and second for debugging only
     if (CLOCK_DEBUG) {
-      fisrtNumber = _now.minute;
+      firstNumber = _now.minute;
       secondNumber = _now.second;
     }
 
@@ -35,8 +36,8 @@ class _ClockClockState extends State<ClockClock> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Spacer(),
-            Digit((fisrtNumber / 10).truncate()),
-            Digit(fisrtNumber % 10),
+            Digit((firstNumber / 10).truncate()),
+            Digit(firstNumber % 10),
             Spacer(),
             Digit((secondNumber / 10).truncate()),
             Digit(secondNumber % 10),
@@ -62,10 +63,10 @@ class _ClockClockState extends State<ClockClock> {
   void _updateTime() {
     setState(() {
       _now = DateTime.now();
-      // Update once per minutes or every 3 seconds if in debug mode
+      // Update once per minutes or every 13 seconds if in debug mode
       var nextUpdate = Duration(minutes: 1) - Duration(seconds: _now.second);
       if (CLOCK_DEBUG) {
-        nextUpdate = Duration(seconds: 3) - Duration(milliseconds: _now.millisecond);
+        nextUpdate = Duration(seconds: 13) - Duration(milliseconds: _now.millisecond);
       }
 
       _timer = Timer(

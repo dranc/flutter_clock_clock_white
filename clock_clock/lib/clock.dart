@@ -32,7 +32,7 @@ class _ClockState extends State<Clock> with TickerProviderStateMixin {
     super.didUpdateWidget(oldClock);
 
     var controller = AnimationController(
-        duration: Duration(seconds: 2), vsync: this);
+        duration: Duration(seconds: 10), vsync: this);
 
     var t1 = oldClock.time ?? DateTime(0, 0, 0, 7, 35); 
     var t2 = widget.time ?? DateTime(0, 0, 0, 7, 35);
