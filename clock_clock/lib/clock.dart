@@ -32,13 +32,17 @@ class _ClockState extends State<Clock> with TickerProviderStateMixin {
     super.didUpdateWidget(oldClock);
 
     var controller = AnimationController(
-        duration: Duration(milliseconds: 500), vsync: this);
+        duration: Duration(seconds: 2), vsync: this);
 
     var t1 = oldClock.time ?? DateTime(0, 0, 0, 7, 35); 
     var t2 = widget.time ?? DateTime(0, 0, 0, 7, 35);
 
     var begin = t1.hour * 60 +  t1.minute;
     var end = t2.hour * 60 +  t2.minute;
+    // If end is "before" begin, we add a full round of the clock
+    if (begin > end) {
+      end += 12 * 60;
+    }
 
     animation = IntTween(begin: begin, end: end).animate(controller)
       ..addListener(() {
@@ -59,7 +63,8 @@ class _ClockState extends State<Clock> with TickerProviderStateMixin {
     double size = 50;
 
     var t = timeToDisplay ?? DateTime(0, 0, 0, 7, 35);
-
+    var wt = widget.time ?? DateTime(0, 0, 0, 7, 35);
+    
     return Container(
         decoration: ShapeDecoration(
           shape: CircleBorder(
@@ -73,7 +78,9 @@ class _ClockState extends State<Clock> with TickerProviderStateMixin {
           child: CustomPaint(
             painter: _ClockPainter(
               minuteRadians: t.minute * radiansPerTick,
-              hourRadians: t.hour * radiansPerHour,
+              hourRadians: (wt.hour == t.hour || t.hour - wt.hour == 12) ? // Want to display the same hour
+                                t.hour * radiansPerHour : // Only display hour
+                                (t.hour + t.minute/60) * radiansPerHour, // Display hour and the little extra due to the minutes
               isEnable: !isEmpty,                
             ),
           ),
