@@ -11,6 +11,8 @@ final radiansPerTick = radians(360 / 60);
 /// Total distance traveled by an hour hand, each hour, in radians.
 final radiansPerHour = radians(360 / 12);
 
+final defaultHour = DateTime(0, 0, 0, 7, 35);
+
 class Clock extends StatefulWidget {
   const Clock(this.time, this.size);
 
@@ -36,8 +38,8 @@ class _ClockState extends State<Clock> with TickerProviderStateMixin {
     var controller = AnimationController(
         duration: Duration(seconds: 10), vsync: this);
 
-    var t1 = oldClock.time ?? DateTime(0, 0, 0, 7, 35); 
-    var t2 = widget.time ?? DateTime(0, 0, 0, 7, 35);
+    var t1 = oldClock.time ?? defaultHour; 
+    var t2 = widget.time ?? defaultHour;
 
     var begin = t1.hour * 60 +  t1.minute;
     var end = t2.hour * 60 +  t2.minute;
@@ -61,8 +63,8 @@ class _ClockState extends State<Clock> with TickerProviderStateMixin {
   }
 
   Widget build (BuildContext context) {
-    var t = timeToDisplay ?? DateTime(0, 0, 0, 7, 35);
-    var wt = widget.time ?? DateTime(0, 0, 0, 7, 35);
+    var t = timeToDisplay ?? defaultHour;
+    var wt = widget.time ?? defaultHour;
     
     return Container(
         decoration: ShapeDecoration(

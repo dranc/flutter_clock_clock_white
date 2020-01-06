@@ -35,6 +35,26 @@ class _ClockClockState extends State<ClockClock> {
   void initState() {
     super.initState();
 
+    setState(() {      
+      _firstD = Digit.EMPTY;
+      _secondD = Digit.EMPTY;
+      _thirdD = Digit.EMPTY;
+      _fourthD = Digit.EMPTY;
+    });
+
+    _timer = Timer(
+      Duration(milliseconds: 500),
+      _reset,
+    );
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  void _reset() {
     // Set the initial values.
     // We display a "HI!" message during the startup
     setState(() {      
@@ -46,15 +66,9 @@ class _ClockClockState extends State<ClockClock> {
 
     // Wait 3 seconds before we display the real hour
     _timer = Timer(
-        Duration(seconds: 3),
-        _updateDisplay,
-      );
-  }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
+      Duration(seconds: 13),
+      _updateDisplay,
+    );
   }
 
   void _updateDisplay() {
