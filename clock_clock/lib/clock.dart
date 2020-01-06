@@ -12,12 +12,14 @@ final radiansPerTick = radians(360 / 60);
 final radiansPerHour = radians(360 / 12);
 
 class Clock extends StatefulWidget {
-  const Clock(this.time);
+  const Clock(this.time, this.size);
 
   State<StatefulWidget> createState() => _ClockState();
 
   // The time that will be displayed by the clock
   final DateTime time;
+
+  final double size;
 }
 
 class _ClockState extends State<Clock> with TickerProviderStateMixin {
@@ -58,10 +60,7 @@ class _ClockState extends State<Clock> with TickerProviderStateMixin {
     super.initState();
   }
 
-  Widget build (BuildContext context) {  
-    //double get size => 50;
-    double size = 50;
-
+  Widget build (BuildContext context) {
     var t = timeToDisplay ?? DateTime(0, 0, 0, 7, 35);
     var wt = widget.time ?? DateTime(0, 0, 0, 7, 35);
     
@@ -85,8 +84,8 @@ class _ClockState extends State<Clock> with TickerProviderStateMixin {
             ),
           ),
         ),
-      width: size,
-      height: size
+      width: widget.size,
+      height: widget.size
     );
   }
 }

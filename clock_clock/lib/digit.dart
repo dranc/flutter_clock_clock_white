@@ -11,8 +11,11 @@ class Digit extends StatelessWidget {
   
   final int digit;
 
+
   Widget build(BuildContext context){
     var display = _getDisplay();
+    double size = 3/5 * MediaQuery.of(context).size.height / 4;
+
     return Container(
       //color: Colors.red,
       child: Column(
@@ -21,20 +24,20 @@ class Digit extends StatelessWidget {
         children: <Row>[
           Row(
             children: <Widget>[
-              Clock(display[0]),
-              Clock(display[1])
+              Clock(display[0], size),
+              Clock(display[1], size),
             ]
           ),
           Row(
             children: <Widget>[
-                Clock(display[2]),
-                Clock(display[3])         
+                Clock(display[2], size),
+                Clock(display[3], size),      
             ]
           ),
           Row(
             children: <Widget>[
-                Clock(display[4]),
-                Clock(display[5])         
+                Clock(display[4], size),
+                Clock(display[5], size),       
             ]
           )
         ]

@@ -19,7 +19,6 @@ class _ClockClockState extends State<ClockClock> {
 
   Widget build(BuildContext context) {
     return Container(
-      //margin: const EdgeInsets.all(20.0),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
