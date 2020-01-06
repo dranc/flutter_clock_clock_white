@@ -88,7 +88,7 @@ class Digit extends StatelessWidget {
       case 6:
         return [
           _getTime(6, 15),  _getTime(9, 45),
-          _getTime(0, 15),  _getTime(6, 45),
+          _getTime(3, 30),  _getTime(6, 45),
           _getTime(0, 15),  _getTime(0, 45)];
         break;
       case 7:

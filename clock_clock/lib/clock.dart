@@ -103,8 +103,8 @@ class _ClockPainter extends CustomPainter {
   bool isEnable;
 
   double lineWidth = 6;
-  double minuteLength = 0.9;
-  double hourLength = 0.75;
+  double minuteLength = 0.95;
+  double hourLength = 0.85;
 
   Color darkColor = Colors.black;
   Color lightColor = Colors.grey;
