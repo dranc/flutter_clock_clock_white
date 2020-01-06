@@ -65,12 +65,16 @@ class _ClockState extends State<Clock> with TickerProviderStateMixin {
   Widget build (BuildContext context) {
     var t = timeToDisplay ?? defaultHour;
     var wt = widget.time ?? defaultHour;
+
+    
+    var light = Theme.of(context).brightness == Brightness.light;
+    var color = light ? Colors.black : Colors.white;
     
     return Container(
         decoration: ShapeDecoration(
           shape: CircleBorder(
             side: BorderSide(
-              color: Colors.grey,
+              color: color,
               width: 1,
             )
           )
@@ -82,12 +86,13 @@ class _ClockState extends State<Clock> with TickerProviderStateMixin {
               hourRadians: (wt.hour == t.hour || t.hour - wt.hour == 12) ? // Want to display the same hour
                                 t.hour * radiansPerHour : // Only display hour
                                 (t.hour + t.minute/60) * radiansPerHour, // Display hour and the little extra due to the minutes
-              isEnable: !isEmpty,                
+              isEnable: !isEmpty,
+              color: color
             ),
           ),
         ),
       width: widget.size,
-      height: widget.size
+      height: widget.size,
     );
   }
 }
@@ -96,7 +101,8 @@ class _ClockPainter extends CustomPainter {
   _ClockPainter({
     @required this.minuteRadians, 
     @required this.hourRadians,
-    @required this.isEnable
+    @required this.isEnable,
+    @required this.color,
   });
   
   double minuteRadians;
@@ -104,11 +110,10 @@ class _ClockPainter extends CustomPainter {
   bool isEnable;
 
   double lineWidth = 6;
-  double minuteLength = 0.95;
-  double hourLength = 0.85;
+  double minuteLength = 0.9;
+  double hourLength = 0.8;
 
-  Color darkColor = Colors.black;
-  Color lightColor = Colors.grey;
+  Color color = Colors.black;
 
   Offset _radianToPosition(Size size, double angleRadians, double handSize) {
     final center = (Offset.zero & size).center;
@@ -125,7 +130,7 @@ class _ClockPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final center = (Offset.zero & size).center;
     final linePaint = Paint()
-      ..color = isEnable ? darkColor : lightColor
+      ..color = isEnable ? color : Colors.grey
       ..strokeWidth = lineWidth
       ..strokeCap = StrokeCap.butt;
 

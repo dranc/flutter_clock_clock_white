@@ -36,10 +36,10 @@ class _ClockClockState extends State<ClockClock> {
     super.initState();
 
     setState(() {      
-      _firstD = Digit.EMPTY;
-      _secondD = Digit.EMPTY;
-      _thirdD = Digit.EMPTY;
-      _fourthD = Digit.EMPTY;
+      _firstD = Digit.NOON;
+      _secondD = Digit.NOON;
+      _thirdD = Digit.NOON;
+      _fourthD = Digit.NOON;
     });
 
     _timer = Timer(

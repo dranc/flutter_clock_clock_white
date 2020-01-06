@@ -8,9 +8,9 @@ class Digit extends StatelessWidget {
   static const int EMPTY =  -1;
   static const int H =  98;
   static const int I = 99;
+  static const int NOON = 100;
   
   final int digit;
-
 
   Widget build(BuildContext context){
     var display = _getDisplay();
@@ -122,7 +122,13 @@ class Digit extends StatelessWidget {
           _getTime(6, 30),  _getTime(6, 30),
           _getTime(0, 30),  _getTime(0, 0),
           _getTime(0, 0),   _getTime(0, 0)];
-        break;        
+        break;
+      case NOON:
+        return [
+          _getTime(0, 0),  _getTime(0, 0),
+          _getTime(0, 0),  _getTime(0, 0),
+          _getTime(0, 0),  _getTime(0, 0)];
+        break;   
       case EMPTY:
         return [
           null,             null,
