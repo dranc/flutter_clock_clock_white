@@ -14,34 +14,36 @@ class Digit extends StatelessWidget {
 
   Widget build(BuildContext context){
     var display = _getDisplay();
-    double size = 3/5 * MediaQuery.of(context).size.height / 4;
+    //double size = 50;// 3/5 * MediaQuery.of(context).size.height / 4;
 
-    return Container(
-      //color: Colors.red,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Row>[
-          Row(
-            children: <Widget>[
-              Clock(display[0], size),
-              Clock(display[1], size),
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        double size = constraints.maxHeight / 5;
+        return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Row>[
+              Row(
+                children: <Widget>[
+                  Clock(display[0], size),
+                  Clock(display[1], size),
+                ]
+              ),
+              Row(
+                children: <Widget>[
+                    Clock(display[2], size),
+                    Clock(display[3], size),      
+                ]
+              ),
+              Row(
+                children: <Widget>[
+                    Clock(display[4], size),
+                    Clock(display[5], size),       
+                ]
+              )
             ]
-          ),
-          Row(
-            children: <Widget>[
-                Clock(display[2], size),
-                Clock(display[3], size),      
-            ]
-          ),
-          Row(
-            children: <Widget>[
-                Clock(display[4], size),
-                Clock(display[5], size),       
-            ]
-          )
-        ]
-      ),
+          );
+      },
     );
   }
 
