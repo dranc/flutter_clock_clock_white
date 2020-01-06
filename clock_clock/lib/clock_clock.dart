@@ -37,8 +37,8 @@ class _ClockClockState extends State<ClockClock> {
 
     setState(() {      
       _firstD = Digit.NOON;
-      _secondD = Digit.NOON;
-      _thirdD = Digit.NOON;
+      _secondD = Digit.EMPTY;
+      _thirdD = Digit.EMPTY;
       _fourthD = Digit.NOON;
     });
 
