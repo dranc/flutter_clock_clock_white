@@ -14,10 +14,7 @@ class ClockClock extends StatefulWidget {
 }
 
 class _ClockClockState extends State<ClockClock> {
-  // TIP: when developping set the following bool to true to see the clock display minutes / seconds and been updated every 13 seconds
-  static const bool CLOCK_DEBUG = true;
   Timer _timer;
-
   int _firstD, _secondD, _thirdD, _fourthD;
 
   Widget build(BuildContext context) {
