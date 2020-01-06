@@ -22,17 +22,14 @@ class _ClockClockState extends State<ClockClock> {
 
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(20.0),
+      //margin: const EdgeInsets.all(20.0),
       child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Spacer(),
             Digit(_firstD),
             Digit(_secondD),
-            Spacer(),
             Digit(_thirdD),
             Digit(_fourthD),
-            Spacer(),
           ],
         ),
     );
@@ -54,7 +51,7 @@ class _ClockClockState extends State<ClockClock> {
     // Wait 3 seconds before we display the real hour
     _timer = Timer(
         Duration(seconds: 3),
-        _updateTime,
+        _updateDisplay,
       );
   }
 
@@ -64,30 +61,51 @@ class _ClockClockState extends State<ClockClock> {
     super.dispose();
   }
 
-  void _updateTime() {
+  void _updateDisplay() {
     var now = DateTime.now();
-    var firstNumber = widget.model.is24HourFormat ? now.hour : now.hour % 12;
-    var secondNumber = now.minute;
-    // Update once per minutes or every 13 seconds if in debug mode
-    var nextUpdate = Duration(minutes: 1) - Duration(seconds: now.second);
-    
-    // Use minute and second for debugging only
-    if (CLOCK_DEBUG) {
-      firstNumber = now.minute;
-      secondNumber = now.second;
-      nextUpdate = Duration(seconds: 13) - Duration(milliseconds: now.millisecond);
+    var firstD = _firstD, secondD = _secondD, thirdD = _thirdD, fourthD = _fourthD;
+
+    if(widget.model.location == 'demo') {
+      // Display every 13 seconds
+      if (now.second % 13 == 0) {
+        var firstNumber = now.minute;
+        var secondNumber = now.second;
+        firstD = (firstNumber / 10).truncate();
+        secondD = firstNumber % 10;
+        thirdD = (secondNumber / 10).truncate();
+        fourthD = secondNumber % 10;
+      }
+    } else if (RegExp('^demo-\\d{4}\$', caseSensitive: true, multiLine: false).hasMatch(widget.model.location)) {
+      // Display what have been filled by user
+      var value = widget.model.location.substring(5);
+      firstD = int.parse(value.substring(0, 1));
+      secondD = int.parse(value.substring(1, 2));
+      thirdD = int.parse(value.substring(2, 3));
+      fourthD = int.parse(value.substring(3, 4));
+    } else {
+      // Default display normal hour being carrefull about format (12/24)
+      var firstNumber = widget.model.is24HourFormat ? now.hour : now.hour % 12;
+      var secondNumber = now.minute;
+      firstD = (firstNumber / 10).truncate();
+      secondD = firstNumber % 10;
+      thirdD = (secondNumber / 10).truncate();
+      fourthD = secondNumber % 10;
     }
 
-    setState(() {
-      _firstD = (firstNumber / 10).truncate();
-      _secondD = firstNumber % 10;
-      _thirdD = (secondNumber / 10).truncate();
-      _fourthD = secondNumber % 10;
-    });
+    // Update the state if something change
+    if (_firstD != firstD || _secondD != secondD || _thirdD != thirdD || _fourthD != fourthD) {
+      setState(() {
+        _firstD = firstD;
+        _secondD = secondD;
+        _thirdD = thirdD;
+        _fourthD = fourthD;
+      });
+    }
 
+    // Call this function every exact 1 second
     _timer = Timer(
-      nextUpdate,
-      _updateTime,
+      Duration(seconds: 1) - Duration(milliseconds: DateTime.now().millisecond),
+      _updateDisplay,
     );
   }
 }
