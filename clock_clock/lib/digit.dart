@@ -55,7 +55,7 @@ class Digit extends StatelessWidget {
     switch (digit) {
       case 0:
         return [
-          _getTime(3, 30),  _getTime(9, 30),
+          _getTime(6, 15),  _getTime(6, 45),
           _getTime(0, 30),  _getTime(0, 30),
           _getTime(0, 15),  _getTime(0, 45)];
         break;
@@ -92,26 +92,26 @@ class Digit extends StatelessWidget {
       case 6:
         return [
           _getTime(6, 15),  _getTime(9, 45),
-          _getTime(3, 30),  _getTime(6, 45),
+          _getTime(6, 15),  _getTime(6, 45),
           _getTime(0, 15),  _getTime(0, 45)];
         break;
       case 7:
         return [
-          _getTime(3, 15),  _getTime(9, 30),
-          null,             _getTime(0, 30),
+          _getTime(3, 15),  _getTime(6, 45),
+          null,             _getTime(6, 00),
           null,             _getTime(0, 0)];
         break;
       case 8:
         return [
           _getTime(3, 30),  _getTime(9, 30),
-          _getTime(0, 15),  _getTime(0, 45),
+          _getTime(3, 0),   _getTime(9, 0),
           _getTime(0, 15),  _getTime(0, 45)];
         break;
       case 9:
         return [
           _getTime(3, 30),  _getTime(9, 30),
-          _getTime(0, 15),  _getTime(0, 45),
-          _getTime(3, 15),  _getTime(0, 45)];
+          _getTime(3, 0),   _getTime(9, 0),
+          _getTime(3, 15),  _getTime(0, 0)];
         break;
       case H:
         return [
