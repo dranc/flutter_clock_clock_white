@@ -6,9 +6,9 @@ Work is still in progress but this repo is now public.
 
 <img src='white_clock_clock.gif' width='350'>
 
-<img src='white_clock_clock_dark.png' width='350'>
+<img src='white_clock_clock_dark.jpg' width='350'>
 
-<img src='white_clock_clock_light.png' width='350'>
+<img src='white_clock_clock_light.jpg' width='350'>
 
 *Fill free to give me some feedback.*
 
