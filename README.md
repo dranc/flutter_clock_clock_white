@@ -1,6 +1,6 @@
 # My submission for the Flutter Clock challenge
 
-My clock is located in the folder *clock_clock*.
+My clock is located in the folder [clock_clock](/clock_clock).
 
 ## Start the project
 
