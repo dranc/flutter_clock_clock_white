@@ -38,9 +38,6 @@ class _ClockState extends State<Clock> with TickerProviderStateMixin {
     super.didUpdateWidget(oldClock);
 
     var controller = AnimationController(duration: Duration(seconds: widget.animationDuration), vsync: this);
-    controller.drive(CurveTween(curve: Curves.bounceInOut));
-
-    //CurvedAnimation(parent: controller, curve: Curves.ease);
 
     var t1 = oldClock.time ?? defaultHour; 
     var t2 = widget.time ?? defaultHour;
