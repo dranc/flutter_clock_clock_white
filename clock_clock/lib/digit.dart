@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:analog_clock/clock.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +11,7 @@ class Digit extends StatelessWidget {
   static const int H =  98;
   static const int I = 99;
   static const int NOON = 100;
+  static const int CURRENT_TIME = 101;
   
   final int digit;
   final int animationDuration;
@@ -48,7 +51,7 @@ class Digit extends StatelessWidget {
   }
 
   DateTime _getTime(int hours, int minutes) {
-    return DateTime(0, 0, 0, hours, minutes);
+    return DateTime(0, 0, 0, hours % 12, minutes);
   }
 
   List<DateTime> _getDisplay() {
@@ -130,7 +133,18 @@ class Digit extends StatelessWidget {
           _getTime(0, 0),  _getTime(0, 0),
           _getTime(0, 0),  _getTime(0, 0),
           _getTime(0, 0),  _getTime(0, 0)];
-        break;   
+        break;
+      case CURRENT_TIME:
+        // In this particular case, we return the current with a random number of hour added to it. All clock will be true in a specific time zone.
+        var now = DateTime.now();
+        return [
+          _getTime(now.hour + Random().nextInt(12), now.minute),
+          _getTime(now.hour + Random().nextInt(12), now.minute),
+          _getTime(now.hour + Random().nextInt(12), now.minute),
+          _getTime(now.hour + Random().nextInt(12), now.minute),
+          _getTime(now.hour + Random().nextInt(12), now.minute),
+          _getTime(now.hour + Random().nextInt(12), now.minute)];
+        break;
       case EMPTY:
         return [
           null,             null,
