@@ -37,8 +37,10 @@ class _ClockState extends State<Clock> with TickerProviderStateMixin {
   void didUpdateWidget(Clock oldClock) {
     super.didUpdateWidget(oldClock);
 
-    var controller = AnimationController(
-        duration: Duration(seconds: widget.animationDuration), vsync: this);
+    var controller = AnimationController(duration: Duration(seconds: widget.animationDuration), vsync: this);
+    controller.drive(CurveTween(curve: Curves.bounceInOut));
+
+    //CurvedAnimation(parent: controller, curve: Curves.ease);
 
     var t1 = oldClock.time ?? defaultHour; 
     var t2 = widget.time ?? defaultHour;
@@ -50,7 +52,8 @@ class _ClockState extends State<Clock> with TickerProviderStateMixin {
       end += 12 * 60;
     }
 
-    animation = IntTween(begin: begin, end: end).animate(controller)
+    final Animation curve = CurvedAnimation(parent: controller, curve: Curves.easeInOut);
+    animation = IntTween(begin: begin, end: end).animate(curve)
       ..addListener(() {
         setState(() {
           timeToDisplay = DateTime(0, 0, 0, (animation.value / 60).truncate(), (animation.value % 60).truncate());
