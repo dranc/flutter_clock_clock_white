@@ -49,6 +49,11 @@ class _ClockState extends State<Clock> with TickerProviderStateMixin {
       end += 12 * 60;
     }
 
+    var diff = end - begin;
+    if (diff != 0 && diff <= 6 * 60) {
+      end += 12 * 60;
+    }
+
     final Animation curve = CurvedAnimation(parent: controller, curve: Curves.easeInOut);
     animation = IntTween(begin: begin, end: end).animate(curve)
       ..addListener(() {

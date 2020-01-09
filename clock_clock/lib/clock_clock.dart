@@ -79,7 +79,6 @@ class _ClockClockState extends State<ClockClock> {
 
     var firstD = _firstD, secondD = _secondD, thirdD = _thirdD, fourthD = _fourthD;
     
-    //TODO to remove true
     if(widget.model.location == 'demo') {
       // Display every 13 seconds
       if (DateTime.now().difference(_lastUpdate).inSeconds >= 13) {
