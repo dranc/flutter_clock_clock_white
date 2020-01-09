@@ -14,7 +14,7 @@ final radiansPerHour = radians(360 / 12);
 final defaultHour = DateTime(0, 0, 0, 7, 35);
 
 class Clock extends StatefulWidget {
-  const Clock(this.time, this.size);
+  const Clock(this.time, this.size, this.animationDuration);
 
   State<StatefulWidget> createState() => _ClockState();
 
@@ -22,6 +22,8 @@ class Clock extends StatefulWidget {
   final DateTime time;
 
   final double size;
+
+  final int animationDuration;
 }
 
 class _ClockState extends State<Clock> with TickerProviderStateMixin {
@@ -36,7 +38,7 @@ class _ClockState extends State<Clock> with TickerProviderStateMixin {
     super.didUpdateWidget(oldClock);
 
     var controller = AnimationController(
-        duration: Duration(seconds: 10), vsync: this);
+        duration: Duration(seconds: widget.animationDuration), vsync: this);
 
     var t1 = oldClock.time ?? defaultHour; 
     var t2 = widget.time ?? defaultHour;

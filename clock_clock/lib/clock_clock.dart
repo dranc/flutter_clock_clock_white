@@ -16,6 +16,7 @@ class ClockClock extends StatefulWidget {
 class _ClockClockState extends State<ClockClock> {
   Timer _timer;
   int _firstD, _secondD, _thirdD, _fourthD;
+  int _animationDuration;
 
   Widget build(BuildContext context) {
     return Container(
@@ -23,10 +24,10 @@ class _ClockClockState extends State<ClockClock> {
       child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Digit(_firstD),
-            Digit(_secondD),
-            Digit(_thirdD),
-            Digit(_fourthD),
+            Digit(_firstD, _animationDuration),
+            Digit(_secondD, _animationDuration),
+            Digit(_thirdD, _animationDuration),
+            Digit(_fourthD, _animationDuration),
           ],
         ),
     );
@@ -63,11 +64,13 @@ class _ClockClockState extends State<ClockClock> {
       _secondD = Digit.H;
       _thirdD = Digit.I;
       _fourthD = Digit.EMPTY;
+
+      _animationDuration = 2;
     });
 
     // Wait 3 seconds before we display the real hour
     _timer = Timer(
-      Duration(seconds: 13),
+      Duration(seconds: 5),
       _updateDisplay,
     );
   }
@@ -75,7 +78,7 @@ class _ClockClockState extends State<ClockClock> {
   void _updateDisplay() {
     var now = DateTime.now();
     var firstD = _firstD, secondD = _secondD, thirdD = _thirdD, fourthD = _fourthD;
-
+    
     if(widget.model.location == 'demo') {
       // Display every 13 seconds
       if (now.second % 13 == 0) {
@@ -103,13 +106,20 @@ class _ClockClockState extends State<ClockClock> {
       fourthD = secondNumber % 10;
     }
 
+    var animationDuration = 10;
+
     // Update the state if something change
-    if (_firstD != firstD || _secondD != secondD || _thirdD != thirdD || _fourthD != fourthD) {
+    if (_firstD != firstD ||
+      _secondD != secondD ||
+      _thirdD != thirdD ||
+      _fourthD != fourthD ||
+      _animationDuration != animationDuration) {
       setState(() {
         _firstD = firstD;
         _secondD = secondD;
         _thirdD = thirdD;
         _fourthD = fourthD;
+        _animationDuration = animationDuration;
       });
     }
 

@@ -2,7 +2,7 @@ import 'package:analog_clock/clock.dart';
 import 'package:flutter/material.dart';
 
 class Digit extends StatelessWidget {
-  const Digit(this.digit);
+  Digit(this.digit, this.animationDuration);
 
   // Number displayed when showing the welcome letter
   static const int EMPTY =  -1;
@@ -11,10 +11,10 @@ class Digit extends StatelessWidget {
   static const int NOON = 100;
   
   final int digit;
+  final int animationDuration;
 
   Widget build(BuildContext context){
     var display = _getDisplay();
-    //double size = 50;// 3/5 * MediaQuery.of(context).size.height / 4;
 
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
@@ -25,20 +25,20 @@ class Digit extends StatelessWidget {
             children: <Row>[
               Row(
                 children: <Widget>[
-                  Clock(display[0], size),
-                  Clock(display[1], size),
+                  Clock(display[0], size, animationDuration),
+                  Clock(display[1], size, animationDuration),
                 ]
               ),
               Row(
                 children: <Widget>[
-                    Clock(display[2], size),
-                    Clock(display[3], size),      
+                    Clock(display[2], size, animationDuration),
+                    Clock(display[3], size, animationDuration),      
                 ]
               ),
               Row(
                 children: <Widget>[
-                    Clock(display[4], size),
-                    Clock(display[5], size),       
+                    Clock(display[4], size, animationDuration),
+                    Clock(display[5], size, animationDuration),       
                 ]
               )
             ]
@@ -111,7 +111,7 @@ class Digit extends StatelessWidget {
         return [
           _getTime(3, 30),  _getTime(9, 30),
           _getTime(3, 0),   _getTime(9, 0),
-          _getTime(3, 15),  _getTime(0, 0)];
+          _getTime(3, 15),  _getTime(9, 0)];
         break;
       case H:
         return [
