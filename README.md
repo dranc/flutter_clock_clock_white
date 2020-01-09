@@ -1,8 +1,12 @@
-# Pour lancer l'appli
+# My submission for the Flutter Clock challenge
 
-Dans le terminal de Visual Code
+My clock is located in the folder [clock_clock](/clock_clock).
+
+## Start the project
+
+Open this folder in Visual Code, in the terminal run the commands
 
     cd clock_clock
     flutter run
 
-Idée largement inspirée de [humanssince1982](https://www.humanssince1982.com/the-clock-clock-white).
+Design more than inspired from [humanssince1982](https://www.humanssince1982.com/the-clock-clock-white).

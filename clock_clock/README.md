@@ -1,10 +1,15 @@
-# Analog Clock
+# The Clock Clock White
 
-This app is an example of an analog clock.
-It has a light theme and a dark theme, and displays sample weather and location data.
+This is my contribution for the Flutter Clock challenge.
 
-<img src='analog.gif' width='350'>
+Work is still in progress but this repo is now public.
 
-<img src='analog_dark.png' width='350'>
+<img src='white_clock_clock.gif' width='350'>
 
-<img src='analog_light.png' width='350'>
+<img src='white_clock_clock_dark.jpg' width='350'>
+
+<img src='white_clock_clock_light.jpg' width='350'>
+
+*Fill free to give me some feedback.*
+
+Design more than inspired from [humanssince1982](https://www.humanssince1982.com/the-clock-clock-white).
