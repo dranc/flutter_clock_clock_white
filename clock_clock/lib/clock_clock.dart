@@ -17,6 +17,7 @@ class _ClockClockState extends State<ClockClock> {
   Timer _timer;
   int _firstD, _secondD, _thirdD, _fourthD;
   int _animationDuration;
+  DateTime _lastUpdate = DateTime.now();
 
   Widget build(BuildContext context) {
     return Container(
@@ -59,29 +60,29 @@ class _ClockClockState extends State<ClockClock> {
   void _reset() {
     // Set the initial values.
     // We display a "HI!" message during the startup
-    setState(() {      
-      _firstD = Digit.EMPTY;
-      _secondD = Digit.H;
-      _thirdD = Digit.I;
-      _fourthD = Digit.EMPTY;
 
-      _animationDuration = 2;
-    });
-
+    updateState(Digit.EMPTY, Digit.H, Digit.I, Digit.EMPTY, 2);
+    
     // Wait 3 seconds before we display the real hour
     _timer = Timer(
       Duration(seconds: 5),
-      _updateDisplay,
+      _updateDisplayWithTime,
     );
   }
 
-  void _updateDisplay() {
+  void _updateDisplayWithTime() {
+    var animationDuration = 10;
+
     var now = DateTime.now();
+    // We add the duration animation so when the animation stop when the time change
+    now = now.add(Duration(seconds: animationDuration));
+
     var firstD = _firstD, secondD = _secondD, thirdD = _thirdD, fourthD = _fourthD;
     
+    //TODO to remove true
     if(widget.model.location == 'demo') {
       // Display every 13 seconds
-      if (now.second % 13 == 0) {
+      if (DateTime.now().difference(_lastUpdate).inSeconds >= 13) {
         var firstNumber = now.minute;
         var secondNumber = now.second;
         firstD = (firstNumber / 10).truncate();
@@ -106,14 +107,17 @@ class _ClockClockState extends State<ClockClock> {
       fourthD = secondNumber % 10;
     }
 
-    var animationDuration = 10;
+    updateState(firstD, secondD, thirdD, fourthD, animationDuration);
 
-    // Update the state if something change
-    if (_firstD != firstD ||
-      _secondD != secondD ||
-      _thirdD != thirdD ||
-      _fourthD != fourthD ||
-      _animationDuration != animationDuration) {
+    // Call this function every exact 1 second
+    _timer = Timer(
+      Duration(seconds: 1) - Duration(milliseconds: DateTime.now().millisecond),
+      _updateDisplayWithTime,
+    );
+  }
+
+  void updateState(int firstD, int secondD, int thirdD, int fourthD, int animationDuration) {
+    if (_firstD != firstD || _secondD != secondD || _thirdD != thirdD || _fourthD != fourthD || _animationDuration != animationDuration) {
       setState(() {
         _firstD = firstD;
         _secondD = secondD;
@@ -121,12 +125,8 @@ class _ClockClockState extends State<ClockClock> {
         _fourthD = fourthD;
         _animationDuration = animationDuration;
       });
+      
+      _lastUpdate = DateTime.now();
     }
-
-    // Call this function every exact 1 second
-    _timer = Timer(
-      Duration(seconds: 1) - Duration(milliseconds: DateTime.now().millisecond),
-      _updateDisplay,
-    );
   }
 }
