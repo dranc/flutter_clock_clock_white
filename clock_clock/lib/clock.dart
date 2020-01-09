@@ -70,7 +70,7 @@ class _ClockState extends State<Clock> with TickerProviderStateMixin {
 
     
     var light = Theme.of(context).brightness == Brightness.light;
-    var color = light ? Colors.black : Colors.white;
+    var color = light ? Colors.grey[900] : Colors.grey[50];
     
     return Container(
         decoration: ShapeDecoration(
@@ -115,7 +115,7 @@ class _ClockPainter extends CustomPainter {
   double minuteLength = 0.9;
   double hourLength = 0.8;
 
-  Color color = Colors.black;
+  Color color = Colors.grey[900];
 
   Offset _radianToPosition(Size size, double angleRadians, double handSize) {
     final center = (Offset.zero & size).center;
