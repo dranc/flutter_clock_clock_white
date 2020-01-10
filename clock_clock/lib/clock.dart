@@ -104,6 +104,7 @@ class _ClockState extends State<Clock> with TickerProviderStateMixin {
         child: SizedBox.expand(
           child: CustomPaint(
             painter: _ClockPainter(
+              isEmpty: animationMinute == null || animationHour == null,
               minuteRadians: animationMinute != null ? animationMinute.value : 0,
               hourRadians: animationHour != null ? animationHour.value : 0,
               color: animationColor != null ? animationColor.value : Colors.grey,
@@ -118,10 +119,13 @@ class _ClockState extends State<Clock> with TickerProviderStateMixin {
 
 class _ClockPainter extends CustomPainter {
   _ClockPainter({
+    @required this.isEmpty,
     @required this.minuteRadians, 
     @required this.hourRadians,
     @required this.color,
   });
+
+  bool isEmpty;
   
   double minuteRadians;
   double hourRadians;
@@ -151,16 +155,18 @@ class _ClockPainter extends CustomPainter {
       ..strokeWidth = lineWidth
       ..strokeCap = StrokeCap.butt;
 
-    // Draw hours hand
-    final positionHour = _radianToPosition(size, hourRadians, hourLength);
-    canvas.drawLine(center, positionHour, linePaint);
+    if (!isEmpty) {
+      // Draw hours hand
+      final positionHour = _radianToPosition(size, hourRadians, hourLength);
+      canvas.drawLine(center, positionHour, linePaint);
 
-    // Draw minutes hand
-    final positionMinute = _radianToPosition(size, minuteRadians, minuteLength);
-    canvas.drawLine(center, positionMinute, linePaint);
+      // Draw minutes hand
+      final positionMinute = _radianToPosition(size, minuteRadians, minuteLength);
+      canvas.drawLine(center, positionMinute, linePaint);
 
-    // Draw center pin
-    canvas.drawCircle(center, lineWidth /2, linePaint);    
+      // Draw center pin
+      canvas.drawCircle(center, lineWidth /2, linePaint);
+    }
   }
 
   @override
