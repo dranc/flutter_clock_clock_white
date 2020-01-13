@@ -25,7 +25,14 @@ class Clock extends StatefulWidget {
 
   bool get isEnable => time != null;
 
-  Color get color => isEnable ? Colors.black : Colors.grey;
+  Color getColor(BuildContext context) {
+    if (!isEnable) {
+      return Colors.grey;
+    } else {
+      var light = Theme.of(context).brightness == Brightness.light;
+      return light ? Colors.grey[900] : Colors.grey[50];
+    }
+  }
 }
 
 class _ClockState extends State<Clock> with TickerProviderStateMixin {
@@ -77,7 +84,7 @@ class _ClockState extends State<Clock> with TickerProviderStateMixin {
     animationMinute = Tween(begin: minuteBefore, end: minuteAfter).animate(curve)
       ..addListener(() { setState(() { }); })
       ;
-    animationColor = ColorTween(begin: oldClock.color, end: widget.color).animate(curve)
+    animationColor = ColorTween(begin: oldClock.getColor(context), end: widget.getColor(context)).animate(curve)
       ..addListener(() { setState(() { }); })
       ;
 
