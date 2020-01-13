@@ -16,8 +16,10 @@ class ClockClock extends StatefulWidget {
 class _ClockClockState extends State<ClockClock> {
   Timer _timer;
   int _firstD, _secondD, _thirdD, _fourthD;
-  int _animationDuration;
+  int _animationDuration = 3;
   DateTime _lastUpdate = DateTime.now();
+
+  bool get _canUpdate => (_lastUpdate.millisecondsSinceEpoch + _animationDuration * 1000) < DateTime.now().millisecondsSinceEpoch;
 
   Widget build(BuildContext context) {
     return Container(
@@ -116,16 +118,18 @@ class _ClockClockState extends State<ClockClock> {
   }
 
   void updateState(int firstD, int secondD, int thirdD, int fourthD, int animationDuration) {
-    if (_firstD != firstD || _secondD != secondD || _thirdD != thirdD || _fourthD != fourthD || _animationDuration != animationDuration) {
-      setState(() {
-        _firstD = firstD;
-        _secondD = secondD;
-        _thirdD = thirdD;
-        _fourthD = fourthD;
-        _animationDuration = animationDuration;
-      });
-      
-      _lastUpdate = DateTime.now();
+    if (_canUpdate) {
+      if (_firstD != firstD || _secondD != secondD || _thirdD != thirdD || _fourthD != fourthD || _animationDuration != animationDuration) {
+        setState(() {
+          _firstD = firstD;
+          _secondD = secondD;
+          _thirdD = thirdD;
+          _fourthD = fourthD;
+          _animationDuration = animationDuration;
+        });
+        
+        _lastUpdate = DateTime.now();
+      }
     }
   }
 }
