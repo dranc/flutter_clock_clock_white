@@ -16,7 +16,7 @@ class ClockClock extends StatefulWidget {
 class _ClockClockState extends State<ClockClock> {
   Timer _timer;
   int _firstD, _secondD, _thirdD, _fourthD;
-  int _animationDuration = 3;
+  int _animationDuration = 0;
   DateTime _lastUpdate = DateTime.now();
 
   bool get _canUpdate => (_lastUpdate.millisecondsSinceEpoch + _animationDuration * 1000) < DateTime.now().millisecondsSinceEpoch;
