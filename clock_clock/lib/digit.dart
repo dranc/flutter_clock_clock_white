@@ -114,7 +114,7 @@ class Digit extends StatelessWidget {
         return [
           _getTime(3, 30),  _getTime(9, 30),
           _getTime(3, 0),   _getTime(9, 0),
-          _getTime(3, 15),  _getTime(9, 0)];
+          _getTime(3, 15),  _getTime(0, 45)];
         break;
       case H:
         return [
