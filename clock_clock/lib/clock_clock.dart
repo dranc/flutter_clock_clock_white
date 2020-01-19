@@ -31,14 +31,14 @@ class _ClockClockState extends State<ClockClock> {
       child: Container(
         margin: EdgeInsets.all(20.0),
         child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Digit(_firstD, _animationDuration),
-              Digit(_secondD, _animationDuration),
-              Digit(_thirdD, _animationDuration),
-              Digit(_fourthD, _animationDuration),
-            ],
-          ),
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Digit(_firstD, _animationDuration),
+            Digit(_secondD, _animationDuration),
+            Digit(_thirdD, _animationDuration),
+            Digit(_fourthD, _animationDuration),
+          ],
+        ),
       ),
     );
   }
@@ -47,7 +47,7 @@ class _ClockClockState extends State<ClockClock> {
   void initState() {
     super.initState();
 
-    setState(() {      
+    setState(() {
       _firstD = Digit.CURRENT_TIME;
       _secondD = Digit.CURRENT_TIME;
       _thirdD = Digit.CURRENT_TIME;
@@ -72,7 +72,7 @@ class _ClockClockState extends State<ClockClock> {
     // We display a "HI!" message during the startup
 
     updateState(Digit.EMPTY, Digit.H, Digit.I, Digit.EMPTY, 4);
-    
+
     // Wait 3 seconds before we display the real hour
     _timer = Timer(
       Duration(seconds: 5),
@@ -84,7 +84,7 @@ class _ClockClockState extends State<ClockClock> {
   /// The following different role, was for development purpose but I left them also for demo.
   /// If the widget.model.location is 'demo', we will display miutes/seconds and update every 13 seconds.
   /// If the widget.model.location is 'demo-XXXX' where X is a digit, it will displayed the 'XXXX'
-  /// 
+  ///
   /// In every other case, we display the current time.
   void _updateDisplayWithTime() {
     var animationDuration = 10;
@@ -93,9 +93,12 @@ class _ClockClockState extends State<ClockClock> {
     // We add the duration animation so when the animation stop when the time change
     now = now.add(Duration(seconds: animationDuration));
 
-    var firstD = _firstD, secondD = _secondD, thirdD = _thirdD, fourthD = _fourthD;
-    
-    if(widget.model.location == 'demo') {
+    var firstD = _firstD,
+        secondD = _secondD,
+        thirdD = _thirdD,
+        fourthD = _fourthD;
+
+    if (widget.model.location == 'demo') {
       // Display every 13 seconds
       if (DateTime.now().difference(_lastUpdate).inSeconds >= 13) {
         var firstNumber = now.minute;
@@ -105,7 +108,8 @@ class _ClockClockState extends State<ClockClock> {
         thirdD = (secondNumber / 10).truncate();
         fourthD = secondNumber % 10;
       }
-    } else if (RegExp('^demo-\\d{4}\$', caseSensitive: true, multiLine: false).hasMatch(widget.model.location)) {
+    } else if (RegExp('^demo-\\d{4}\$', caseSensitive: true, multiLine: false)
+        .hasMatch(widget.model.location)) {
       // Display what have been filled by user
       var value = widget.model.location.substring(5);
       firstD = int.parse(value.substring(0, 1));
@@ -132,13 +136,20 @@ class _ClockClockState extends State<ClockClock> {
   }
 
   /// Funciton tat manage the update of the state. We check that the last animation is already ended before updating the state.
-  void updateState(int firstD, int secondD, int thirdD, int fourthD, int animationDuration) {    
+  void updateState(
+      int firstD, int secondD, int thirdD, int fourthD, int animationDuration) {
     /// To avoid multiple animations launch at the same time (for exemple if the time updated before the welcome message finished),
     /// we check that the previous animation is finished before updating.
     /// In result, in a really rare case, the hour displayed can be false during some seconds.
-    bool canUpdate = (_lastUpdate.millisecondsSinceEpoch + _animationDuration * 1000) < DateTime.now().millisecondsSinceEpoch;
+    bool canUpdate =
+        (_lastUpdate.millisecondsSinceEpoch + _animationDuration * 1000) <
+            DateTime.now().millisecondsSinceEpoch;
     if (canUpdate) {
-      if (_firstD != firstD || _secondD != secondD || _thirdD != thirdD || _fourthD != fourthD || _animationDuration != animationDuration) {
+      if (_firstD != firstD ||
+          _secondD != secondD ||
+          _thirdD != thirdD ||
+          _fourthD != fourthD ||
+          _animationDuration != animationDuration) {
         setState(() {
           _firstD = firstD;
           _secondD = secondD;
@@ -146,7 +157,7 @@ class _ClockClockState extends State<ClockClock> {
           _fourthD = fourthD;
           _animationDuration = animationDuration;
         });
-        
+
         _lastUpdate = DateTime.now();
       }
     }
