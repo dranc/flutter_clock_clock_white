@@ -14,28 +14,27 @@ final radiansPerHour = radians(360 / 12);
 /// This widget was build on top of the analof clock given with the original repo
 /// I'm not sure there is a lot of the original code left here.
 class Clock extends StatefulWidget {
-  const Clock(this.time, this.size, this.animationDuration);
+  Clock(DateTime time, double size, int animationDuration, bool isLight) {
+    this.time = time;
+    this.size = size;
+    this.animationDuration = animationDuration;
+    if (!isEnable) {
+      this.color = Colors.grey;
+    } else {
+      this.color = isLight ? Colors.grey[900] : Colors.grey[50];
+    }
+  }
 
   State<StatefulWidget> createState() => _ClockState();
 
   /// The time that will be displayed by the clock
-  final DateTime time;
-
-  final double size;
-
-  final int animationDuration;
+  DateTime time;
+  double size;
+  int animationDuration;
+  Color color;
 
   /// If there is no time to display, the clock is considered as disable and will be in grey.
   bool get isEnable => time != null;
-
-  Color getColor(BuildContext context) {
-    if (!isEnable) {
-      return Colors.grey;
-    } else {
-      var light = Theme.of(context).brightness == Brightness.light;
-      return light ? Colors.grey[900] : Colors.grey[50];
-    }
-  }
 }
 
 /// The state of the clock the will evolve during the animation.
@@ -93,7 +92,7 @@ class _ClockState extends State<Clock> with TickerProviderStateMixin {
     animationMinute = Tween(begin: minuteBefore, end: minuteAfter).animate(curve)
       ..addListener(() { setState(() { }); })
       ;
-    animationColor = ColorTween(begin: oldClock.getColor(context), end: widget.getColor(context)).animate(curve)
+    animationColor = ColorTween(begin: oldClock.color, end: widget.color).animate(curve)
       ..addListener(() { setState(() { }); })
       ;
 
@@ -188,6 +187,7 @@ class _ClockPainter extends CustomPainter {
   @override
   bool shouldRepaint(_ClockPainter oldDelegate) {
     return oldDelegate.minuteRadians != minuteRadians ||
-        oldDelegate.hourRadians != hourRadians;
+        oldDelegate.hourRadians != hourRadians || 
+        oldDelegate.color != color;
   }
 }

@@ -22,27 +22,28 @@ class Digit extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        double size = constraints.maxHeight / 5;
+        double size = constraints.maxHeight / 5;        
+        var light = Theme.of(context).brightness == Brightness.light;
         return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Row>[
               Row(
                 children: <Widget>[
-                  Clock(display[0], size, animationDuration),
-                  Clock(display[1], size, animationDuration),
+                  Clock(display[0], size, animationDuration, light),
+                  Clock(display[1], size, animationDuration, light),
                 ]
               ),
               Row(
                 children: <Widget>[
-                    Clock(display[2], size, animationDuration),
-                    Clock(display[3], size, animationDuration),      
+                    Clock(display[2], size, animationDuration, light),
+                    Clock(display[3], size, animationDuration, light),      
                 ]
               ),
               Row(
                 children: <Widget>[
-                    Clock(display[4], size, animationDuration),
-                    Clock(display[5], size, animationDuration),       
+                    Clock(display[4], size, animationDuration, light),
+                    Clock(display[5], size, animationDuration, light),       
                 ]
               )
             ]
