@@ -10,6 +10,10 @@ Work is still in progress but this repo is now public.
 
 <img src='white_clock_clock_light.jpg' width='350'>
 
+## Demo
+
+A live demo is [available here]( https://clockclockwhite.firebaseapp.com)
+
 ## How to use
 
 Just launch the app and discover a beautifull clock.
