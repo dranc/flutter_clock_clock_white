@@ -18,21 +18,26 @@ class _ClockClockState extends State<ClockClock> {
   int _firstD, _secondD, _thirdD, _fourthD;
   int _animationDuration = 0;
   DateTime _lastUpdate = DateTime.now();
+  int _rebuildCounter = 0;
 
   bool get _canUpdate => (_lastUpdate.millisecondsSinceEpoch + _animationDuration * 1000) < DateTime.now().millisecondsSinceEpoch;
 
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(20.0),
-      child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Digit(_firstD, _animationDuration),
-            Digit(_secondD, _animationDuration),
-            Digit(_thirdD, _animationDuration),
-            Digit(_fourthD, _animationDuration),
-          ],
-        ),
+    return AnimatedOpacity(
+      duration: Duration(seconds: 2),
+      opacity: _rebuildCounter++ > 0 ? 1 : 0,
+      child: Container(
+        margin: EdgeInsets.all(20.0),
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Digit(_firstD, _animationDuration),
+              Digit(_secondD, _animationDuration),
+              Digit(_thirdD, _animationDuration),
+              Digit(_fourthD, _animationDuration),
+            ],
+          ),
+      ),
     );
   }
 
