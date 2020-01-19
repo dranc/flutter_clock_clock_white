@@ -4,6 +4,8 @@ import 'package:analog_clock/digit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clock_helper/model.dart';
 
+/// This is the main widget of the clock, it will contains 4 digits displayed with six clocks
+/// The widget is updated every second to know what are the digits we need to display.
 class ClockClock extends StatefulWidget {
   const ClockClock(this.model);
 
@@ -13,6 +15,7 @@ class ClockClock extends StatefulWidget {
   _ClockClockState createState() => _ClockClockState();
 }
 
+/// Ths state of the clock.
 class _ClockClockState extends State<ClockClock> {
   Timer _timer;
   int _firstD, _secondD, _thirdD, _fourthD;
@@ -20,8 +23,7 @@ class _ClockClockState extends State<ClockClock> {
   DateTime _lastUpdate = DateTime.now();
   int _rebuildCounter = 0;
 
-  bool get _canUpdate => (_lastUpdate.millisecondsSinceEpoch + _animationDuration * 1000) < DateTime.now().millisecondsSinceEpoch;
-
+  /// To avoid flsahing start, we use opacity animation for the first build only
   Widget build(BuildContext context) {
     return AnimatedOpacity(
       duration: Duration(seconds: 2),
@@ -41,7 +43,7 @@ class _ClockClockState extends State<ClockClock> {
     );
   }
 
-  @override
+  /// At the begining, we display the current time without the digits. Then it will diplsay the hi message
   void initState() {
     super.initState();
 
@@ -54,7 +56,7 @@ class _ClockClockState extends State<ClockClock> {
 
     _timer = Timer(
       Duration(milliseconds: 500),
-      _reset,
+      _hi,
     );
   }
 
@@ -64,7 +66,8 @@ class _ClockClockState extends State<ClockClock> {
     super.dispose();
   }
 
-  void _reset() {
+  /// Display the Hi animation and the display the time with the clocks
+  void _hi() {
     // Set the initial values.
     // We display a "HI!" message during the startup
 
@@ -77,6 +80,12 @@ class _ClockClockState extends State<ClockClock> {
     );
   }
 
+  /// This function will display the time with the clocks. There is different modes that will be choosed here.
+  /// The following different role, was for development purpose but I left them also for demo.
+  /// If the widget.model.location is 'demo', we will display miutes/seconds and update every 13 seconds.
+  /// If the widget.model.location is 'demo-XXXX' where X is a digit, it will displayed the 'XXXX'
+  /// 
+  /// In every other case, we display the current time.
   void _updateDisplayWithTime() {
     var animationDuration = 10;
 
@@ -122,8 +131,13 @@ class _ClockClockState extends State<ClockClock> {
     );
   }
 
-  void updateState(int firstD, int secondD, int thirdD, int fourthD, int animationDuration) {
-    if (_canUpdate) {
+  /// Funciton tat manage the update of the state. We check that the last animation is already ended before updating the state.
+  void updateState(int firstD, int secondD, int thirdD, int fourthD, int animationDuration) {    
+    /// To avoid multiple animations launch at the same time (for exemple if the time updated before the welcome message finished),
+    /// we check that the previous animation is finished before updating.
+    /// In result, in a really rare case, the hour displayed can be false during some seconds.
+    bool canUpdate = (_lastUpdate.millisecondsSinceEpoch + _animationDuration * 1000) < DateTime.now().millisecondsSinceEpoch;
+    if (canUpdate) {
       if (_firstD != firstD || _secondD != secondD || _thirdD != thirdD || _fourthD != fourthD || _animationDuration != animationDuration) {
         setState(() {
           _firstD = firstD;

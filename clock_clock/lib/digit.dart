@@ -3,10 +3,11 @@ import 'dart:math';
 import 'package:analog_clock/clock.dart';
 import 'package:flutter/material.dart';
 
+/// This widget is the widget that display a digit using 6 clocks. It transform a digit to a combinasion of 6 hours.
 class Digit extends StatelessWidget {
   Digit(this.digit, this.animationDuration);
 
-  // Number displayed when showing the welcome letter
+  /// Custom digits that can display other things than number
   static const int EMPTY =  -1;
   static const int H =  98;
   static const int I = 99;
@@ -50,10 +51,13 @@ class Digit extends StatelessWidget {
     );
   }
 
+  /// Function that retrieve a date from an hour and a time
+  /// Thanks to this function all time displayed have the same date. It simplifies the process when we compare the time
   DateTime _getTime(int hours, int minutes) {
     return DateTime(0, 0, 0, hours % 12, minutes);
   }
 
+  /// Return an array of 6 clocks that will be displayed in the widget.
   List<DateTime> _getDisplay() {
     switch (digit) {
       case 0:
@@ -135,7 +139,9 @@ class Digit extends StatelessWidget {
           _getTime(0, 0),  _getTime(0, 0)];
         break;
       case CURRENT_TIME:
-        // In this particular case, we return the current with a random number of hour added to it. All clock will be true in a specific time zone.
+        /// In this particular case
+        /// We return the current time with a random number of hour added to it.
+        /// All clocks will display a correct time in a specific time zone.
         var now = DateTime.now();
         return [
           _getTime(now.hour + Random().nextInt(12), now.minute),
